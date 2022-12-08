@@ -12,7 +12,8 @@ import com.kdy_soft.jetnewsclone.presentation.screen.interests.InterestsRoute
 @Composable
 fun NavGraph(
     modifier: Modifier = Modifier,
-    navController: NavHostController = rememberNavController()
+    navController: NavHostController = rememberNavController(),
+    openDrawer: ()->Unit
 ) {
     NavHost(
         navController = navController,
@@ -20,11 +21,11 @@ fun NavGraph(
         startDestination = JetNewsNavigationRoute.HOME_ROUTE
     ) {
         composable(JetNewsNavigationRoute.HOME_ROUTE) {
-            HomeRoute()
+            HomeRoute(openDrawer= openDrawer)
         }
 
         composable(JetNewsNavigationRoute.INTERESTS_ROUTE) {
-            InterestsRoute()
+            InterestsRoute(openDrawer= openDrawer)
         }
     }
 }
