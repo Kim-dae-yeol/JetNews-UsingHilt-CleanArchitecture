@@ -1,6 +1,6 @@
 package com.kdy_soft.jetnewsclone.model
 
-data class PostFeed(
+data class PostsFeed(
     val highlightedPost: Post,
     val recommendedPosts: List<Post>,
     val popularPosts: List<Post>,
