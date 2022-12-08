@@ -18,11 +18,11 @@ interface InterestsRepository {
 
     suspend fun togglePublicationSelected(publication: String)
 
-    suspend fun observeTopicSelected(): Flow<Set<TopicSelection>>
+    fun observeTopicSelected(): Flow<Set<TopicSelection>>
 
-    suspend fun observePersonSelected(): Flow<Set<String>>
+    fun observePersonSelected(): Flow<Set<String>>
 
-    suspend fun observePublicationSelected(): Flow<Set<String>>
+    fun observePublicationSelected(): Flow<Set<String>>
 }
 
 data class TopicSelection(val section: String, val topic: String)
