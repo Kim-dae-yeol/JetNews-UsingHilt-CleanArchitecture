@@ -1,3 +1,12 @@
 <resources>
     <string name="app_name">JetNewsClone</string>
+    <string name="close">닫기</string>
+    <string name="article_functionality_not_available">Functionality not available 🙈</string>
+    <string name="article_share_post">공유하기</string>
+    <string name="published_in">Published in %1$s</string>
+    <string name="cd_add_to_favorites">즐겨찾기</string>
+    <string name="bookmark">북마크</string>
+    <string name="unbookmark">해제</string>
+    <string name="cd_share">공유</string>
+    <string name="cd_text_settings">문자 설정</string>
 </resources>
