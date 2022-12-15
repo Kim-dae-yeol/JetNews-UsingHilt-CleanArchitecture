@@ -9,4 +9,6 @@
     <string name="unbookmark">해제</string>
     <string name="cd_share">공유</string>
     <string name="cd_text_settings">문자 설정</string>
+    <string name="cd_navigate_up">뒤로가기</string>
+    <string name="author_and_time">%1s - %2d 분</string>
 </resources>

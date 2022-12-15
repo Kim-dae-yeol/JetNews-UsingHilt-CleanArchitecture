@@ -1,4 +1,4 @@
-package com.kdy_soft.jetnewsclone.data.repositories
+package com.kdy_soft.jetnewsclone.data.repositories.interfaces
 
 import kotlinx.coroutines.flow.Flow
 

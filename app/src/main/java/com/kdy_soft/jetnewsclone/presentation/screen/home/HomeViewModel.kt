@@ -3,6 +3,7 @@ package com.kdy_soft.jetnewsclone.presentation.screen.home
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.kdy_soft.jetnewsclone.data.repositories.interfaces.PostRepository
 import com.kdy_soft.jetnewsclone.model.Post
 import com.kdy_soft.jetnewsclone.model.PostsFeed
 import com.kdy_soft.jetnewsclone.util.ErrorMessage
@@ -86,7 +87,8 @@ private data class HomeViewModeState(
  * */
 @HiltViewModel
 class HomeViewModel @Inject constructor(
-    private val savedStateHandle: SavedStateHandle
+    private val savedStateHandle: SavedStateHandle,
+    private val postRepository: PostRepository /*TODO : all event conduct by this instance*/
 ) : ViewModel() {
     private val _uiState = MutableStateFlow(HomeViewModeState(isLoading = true))
     val uiState = _uiState.map(HomeViewModeState::toUiState)

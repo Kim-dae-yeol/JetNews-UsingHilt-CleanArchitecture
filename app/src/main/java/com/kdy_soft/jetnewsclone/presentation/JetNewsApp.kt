@@ -1,7 +1,6 @@
 package com.kdy_soft.jetnewsclone.presentation
 
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.widthIn
+import androidx.compose.foundation.layout.*
 import androidx.compose.material3.*
 import androidx.compose.material3.windowsizeclass.WindowWidthSizeClass
 import androidx.compose.runtime.Composable
@@ -9,6 +8,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.currentBackStackEntryAsState
@@ -24,7 +24,7 @@ fun JetNewsApp(
     //Todo : hoisting event, state...
     val scope = rememberCoroutineScope()
     val drawerState = rememberDrawerState(initialValue = DrawerValue.Closed)
-
+    val isExpanded = widthSizeClass == WindowWidthSizeClass.Expanded
 
     val currentBackStackEntry by navController.currentBackStackEntryAsState()
     val currentRoute =
@@ -45,9 +45,19 @@ fun JetNewsApp(
     ) {
 
         NavGraph(
+            isExpandedScreen = isExpanded,
             navController = navController,
             modifier = Modifier.fillMaxSize(),
             openDrawer = { scope.launch { drawerState.open() } }
         )
     }
 }
+
+@Composable
+fun rememberContentPaddingForScreen(
+    additionalTop: Dp = 0.dp,
+    excludeTop: Boolean = false
+): PaddingValues = WindowInsets.systemBars
+    .only(if (excludeTop) WindowInsetsSides.Bottom else WindowInsetsSides.Vertical)
+    .add(WindowInsets(top = additionalTop))
+    .asPaddingValues()

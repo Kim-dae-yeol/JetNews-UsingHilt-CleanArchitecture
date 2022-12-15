@@ -61,6 +61,7 @@ fun JetNewsCloneTheme(
     }
 
     MaterialTheme(
+        shapes = JetNewsShapes,
         colorScheme = colorScheme,
         typography = Typography,
         content = content
