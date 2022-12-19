@@ -3,16 +3,16 @@ package com.kdy_soft.jetnewsclone.presentation.screen.home
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.kdy_soft.jetnewsclone.R
 import com.kdy_soft.jetnewsclone.data.repositories.interfaces.PostRepository
 import com.kdy_soft.jetnewsclone.model.Post
 import com.kdy_soft.jetnewsclone.model.PostsFeed
 import com.kdy_soft.jetnewsclone.util.ErrorMessage
+import com.kdy_soft.jetnewsclone.util.Logger
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.SharingStarted
-import kotlinx.coroutines.flow.map
-import kotlinx.coroutines.flow.stateIn
+import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
+import java.util.UUID
 import javax.inject.Inject
 
 sealed interface HomeUiState {
@@ -105,32 +105,76 @@ class HomeViewModel @Inject constructor(
 
         }
     }
-    fun refreshPosts() {
 
+    fun refreshPosts() {
+        viewModelScope.launch {
+            _uiState.update { it.copy(isLoading = true, postsFeed = null) }
+            postRepository.getPostsFeed()
+                .onFailure { th ->
+                    Logger.e(msg = th.stackTraceToString())
+                    _uiState.update {
+                        it.copy(
+                            isLoading = false,
+                            errorMessages = it.errorMessages + ErrorMessage.ResourceMessage(
+                                id = UUID.randomUUID().mostSignificantBits,
+                                resId = R.string.refresh_failure
+                            )
+                        )
+                    }
+                }
+                .onSuccess { feed ->
+                    _uiState.update {
+                        it.copy(
+                            postsFeed = feed,
+                            isLoading = false
+                        )
+                    }
+
+                }
+
+        }
     }
 
     fun toggleFavorites(favorite: String) {
-
+        viewModelScope.launch {
+            _uiState.update { it.copy(isLoading = true) }
+            postRepository.toggleFavorite(favorite)
+            _uiState.update { it.copy(isLoading = false) }
+        }
     }
 
     fun selectArticle(postId: String) {
-
+        interactedWithArticleDetails(postId)
     }
 
     fun errorShown(errorId: Long) {
-
+        _uiState.update {
+            it.copy(
+                errorMessages = it.errorMessages.filterNot { error -> error.id == errorId }
+            )
+        }
     }
 
     fun interactedWithFeed() {
-
+        _uiState.update {
+            it.copy(
+                selectedPostId = null,
+                isArticleOpen = false
+            )
+        }
     }
 
     fun interactedWithArticleDetails(postId: String) {
-
+        _uiState.update {
+            it.copy(
+                selectedPostId = postId,
+                isArticleOpen = true
+            )
+        }
     }
 
     fun onSearchInputChanged(searchInput: String) {
-
+        _uiState.update { it.copy(searchInput = searchInput) }
     }
 
 

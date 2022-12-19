@@ -7,8 +7,9 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
-import androidx.compose.runtime.Composable
+import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.res.painterResource
@@ -22,29 +23,67 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.kdy_soft.jetnewsclone.R
 import com.kdy_soft.jetnewsclone.data.sources.post1
+import com.kdy_soft.jetnewsclone.data.sources.post2
 import com.kdy_soft.jetnewsclone.model.Post
 import com.kdy_soft.jetnewsclone.presentation.utils.BookmarkButton
+import com.kdy_soft.jetnewsclone.ui.theme.JetNewsCloneTheme
 
 @Preview
 @Composable
 private fun PostCardPreview() {
-    SimplePostCard(
-        post = post1,
-        navigateToArticle = {},
-        isFavorite = false,
-        onToggleFavorite = { }
-    )
+    JetNewsCloneTheme {
+        Surface {
+            SimplePostCard(
+                post = post1,
+                navigateToArticle = {},
+                isFavorite = false,
+                onToggleFavorite = { }
+            )
+        }
+    }
 }
 
 @Preview
 @Composable
 private fun PostCardPreviewBookmarked() {
-    SimplePostCard(
-        post = post1,
-        navigateToArticle = {},
-        isFavorite = true,
-        onToggleFavorite = { }
-    )
+    JetNewsCloneTheme {
+        Surface {
+            SimplePostCard(
+                post = post1,
+                navigateToArticle = {},
+                isFavorite = true,
+                onToggleFavorite = { }
+            )
+        }
+    }
+}
+
+
+@Composable
+fun PostCardHistory(
+    post: Post,
+    navigateToArticle: (postId: String) -> Unit,
+    doNotRecommend: (postId: String) -> Unit,
+    addToFavorites: (postId: String) -> Unit,
+    modifier: Modifier = Modifier
+) {
+    var openDialog by remember { mutableStateOf(false) }
+
+    Row(modifier = modifier.clickable { navigateToArticle(post.id) }) {
+        PostImage(post = post, modifier = Modifier.padding(16.dp))
+        Column(
+            modifier = Modifier
+                .weight(1f)
+                .padding(vertical = 12.dp)
+        ) {
+            Text(
+                text = stringResource(id = R.string.home_post_based_on_history),
+                style = MaterialTheme.typography.labelMedium
+            )
+
+
+        }
+    }
 }
 
 @Composable
@@ -69,7 +108,7 @@ fun SimplePostCard(
                 )
             }
     ) {
-        PostImage(post)
+        PostImage(post, modifier = Modifier.padding(16.dp))
         Column(
             modifier = Modifier
                 .weight(1f)
@@ -77,14 +116,15 @@ fun SimplePostCard(
         ) {
             PostTitle(post)
             AuthorAndReadTime(post)
-            BookmarkButton(
-                isBookmarked = isFavorite,
-                onClick = onToggleFavorite,
-                modifier = Modifier
-                    .clearAndSetSemantics { }
-                    .padding(vertical = 2.dp, horizontal = 6.dp)
-            )
         }
+        BookmarkButton(
+            isBookmarked = isFavorite,
+            onClick = onToggleFavorite,
+            modifier = Modifier
+                .clearAndSetSemantics { }
+                .padding(vertical = 2.dp, horizontal = 6.dp)
+        )
+
     }
 }
 
