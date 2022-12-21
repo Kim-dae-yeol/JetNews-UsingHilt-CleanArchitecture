@@ -64,6 +64,7 @@ fun HomeRoute(
     onErrorDismiss: (Long) -> Unit,
     onInteractWithPost: () -> Unit,
     onInteractWithArticleDetails: (String) -> Unit,
+    searchInput: String = "",
     onSearchInputChanged: (String) -> Unit
 ) {
     val homeLazyListState = rememberLazyListState()
@@ -97,7 +98,19 @@ fun HomeRoute(
             )
         }
 
-        HomeScreenType.Feed -> HomeFeedScreen()
+        HomeScreenType.Feed -> HomeFeedScreen(
+            homeUiState = uiState,
+            showTopAppBar = !isExpandedScreen,
+            onErrorDismiss = onErrorDismiss,
+            onRefreshPosts = onRefreshPost,
+            onSelectPost = onSelectPost,
+            openDrawer = openDrawer,
+            onToggleFavorite = onToggleFavorite,
+            searchInput = searchInput,
+            onSearchInputChanged = onSearchInputChanged,
+            homeListLazyListState = homeLazyListState,
+            snackbarHostState = snackbarHostState
+        )
         HomeScreenType.ArticleDetails -> {
             check(uiState is HomeUiState.HasPosts)
             ArticleScreen(
@@ -109,17 +122,6 @@ fun HomeRoute(
                 lazyListState = articleDetailLazyListState.getValue(uiState.selectedPost.id)
             )
         }
-    }
-
-    Column(modifier = Modifier.fillMaxSize()) {
-        TopAppBar(modifier = Modifier.fillMaxWidth(), title = {}, navigationIcon = {
-            IconButton(
-                onClick = openDrawer
-            ) {
-                Icon(imageVector = Icons.Default.Menu, contentDescription = null)
-            }
-        })
-        HomeFeedScreen()
     }
 }
 

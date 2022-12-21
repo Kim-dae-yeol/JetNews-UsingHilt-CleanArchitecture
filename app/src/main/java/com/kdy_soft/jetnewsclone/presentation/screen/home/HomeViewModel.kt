@@ -10,7 +10,9 @@ import com.kdy_soft.jetnewsclone.model.PostsFeed
 import com.kdy_soft.jetnewsclone.util.ErrorMessage
 import com.kdy_soft.jetnewsclone.util.Logger
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.*
+import kotlinx.coroutines.isActive
 import kotlinx.coroutines.launch
 import java.util.UUID
 import javax.inject.Inject
@@ -102,7 +104,12 @@ class HomeViewModel @Inject constructor(
     init {
         refreshPosts()
         viewModelScope.launch {
-
+            while (true) {
+                if (viewModelScope.isActive) {
+                    delay(5000L)
+                    Logger.d("current state's post feed is ${_uiState.value.postsFeed?.allPosts?.map { it.title } ?: emptyList()}")
+                }
+            }
         }
     }
 
