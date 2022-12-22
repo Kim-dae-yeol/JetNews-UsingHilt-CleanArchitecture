@@ -23,7 +23,6 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.kdy_soft.jetnewsclone.R
 import com.kdy_soft.jetnewsclone.data.sources.post1
-import com.kdy_soft.jetnewsclone.data.sources.post2
 import com.kdy_soft.jetnewsclone.model.Post
 import com.kdy_soft.jetnewsclone.presentation.utils.BookmarkButton
 import com.kdy_soft.jetnewsclone.ui.theme.JetNewsCloneTheme
@@ -155,7 +154,7 @@ fun AuthorAndReadTime(post: Post, modifier: Modifier = Modifier) {
     Row(modifier = modifier) {
         Text(
             text = stringResource(
-                R.string.author_and_time,
+                R.string.home_post_min_read,
                 formatArgs = arrayOf(post.metadata.author.name, post.metadata.readTimeMinutes)
             ),
             style = MaterialTheme.typography.bodyMedium
