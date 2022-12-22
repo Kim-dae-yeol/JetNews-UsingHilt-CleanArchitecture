@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">JetNewsClone</string>
+    <string name="app_name">Jet News</string>
     <string name="close">닫기</string>
     <string name="article_functionality_not_available">Functionality not available 🙈</string>
     <string name="article_share_post">공유하기</string>
@@ -10,5 +10,12 @@
     <string name="cd_share">공유</string>
     <string name="cd_text_settings">문자 설정</string>
     <string name="cd_navigate_up">뒤로가기</string>
-    <string name="author_and_time">%1s - %2d 분</string>
+    <string name="home_post_min_read">%1s - %2d min read</string>
+    <string name="home_post_based_on_history">BASED ON YOUR HISTORY</string>
+    <string name="refresh_failure">새로고침에 실패했습니다.</string>
+    <string name="home_tap_to_load_content">새로고침</string>
+    <string name="retry">다시시도</string>
+    <string name="cd_open_navigation_drawer">네비게이션 드로워 열기</string>
+    <string name="cd_search">검색</string>
+    <string name="home_top_section_title">Top Story</string>
 </resources>
