@@ -7,6 +7,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
@@ -32,7 +33,12 @@ fun PostCardBig(
             .clip(MaterialTheme.shapes.medium)
 
         val postPainter = painterResource(id = post.imageId)
-        Image(painter = postPainter, contentDescription = post.title, modifier = imageModifier)
+        Image(
+            painter = postPainter,
+            contentDescription = post.title,
+            modifier = imageModifier,
+            contentScale = ContentScale.Crop,
+        )
         Spacer(modifier = Modifier.height(16.dp))
         //title
         Text(
@@ -50,7 +56,10 @@ fun PostCardBig(
         Text(
             text = stringResource(
                 id = R.string.home_post_min_read,
-                arrayOf(post.metadata.date, post.metadata.readTimeMinutes)
+                formatArgs = arrayOf(
+                    post.metadata.date,
+                    post.metadata.readTimeMinutes
+                )
             ),
             style = typography.labelLarge
         )
