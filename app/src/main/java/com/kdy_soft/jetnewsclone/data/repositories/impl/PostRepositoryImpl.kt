@@ -8,21 +8,13 @@ import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 
 class PostRepositoryImpl @Inject constructor(
-    postSource: PostSource
+    private val postSource: PostSource
 ) : PostRepository {
-    override suspend fun getPost(postId: String?): Result<Post> {
-        TODO("Not yet implemented")
-    }
+    override suspend fun getPost(postId: String): Result<Post> = postSource.getPost(postId)
 
-    override suspend fun getPostsFeed(): Result<PostsFeed> {
-        TODO("Not yet implemented")
-    }
+    override suspend fun getPostsFeed(): Result<PostsFeed> = postSource.getPostsFeed()
 
-    override fun observeFavorites(): Flow<Set<String>> {
-        TODO("Not yet implemented")
-    }
+    override fun observeFavorites(): Flow<Set<String>> = postSource.observeFavorites()
 
-    override suspend fun toggleFavorite(postId: String) {
-        TODO("Not yet implemented")
-    }
+    override suspend fun toggleFavorite(postId: String) = postSource.toggleFavorite(postId)
 }

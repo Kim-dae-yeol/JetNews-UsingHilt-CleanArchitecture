@@ -169,6 +169,8 @@ fun sharePost(
     post: Post,
     context: Context
 ) {
+
+    //TODO : how to know showing share content sheet
     val intent = Intent(Intent.ACTION_SEND).apply {
         type = "text/plain"
         putExtra(Intent.EXTRA_TITLE, post.title)

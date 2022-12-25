@@ -1,13 +1,13 @@
 package com.kdy_soft.jetnewsclone.presentation.screen.home
 
 import androidx.compose.animation.Crossfade
+import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.LazyListState
-import androidx.compose.foundation.lazy.rememberLazyListState
+import androidx.compose.foundation.lazy.*
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.material3.*
@@ -26,6 +26,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import com.google.accompanist.swiperefresh.SwipeRefresh
 import com.google.accompanist.swiperefresh.rememberSwipeRefreshState
@@ -34,6 +35,10 @@ import com.kdy_soft.jetnewsclone.model.PostsFeed
 import com.kdy_soft.jetnewsclone.presentation.rememberContentPaddingForScreen
 import com.kdy_soft.jetnewsclone.presentation.screen.article.postContentItems
 import com.kdy_soft.jetnewsclone.presentation.screen.article.sharePost
+import com.kdy_soft.jetnewsclone.presentation.utils.BookmarkButton
+import com.kdy_soft.jetnewsclone.presentation.utils.FavoriteButton
+import com.kdy_soft.jetnewsclone.presentation.utils.ShareButton
+import com.kdy_soft.jetnewsclone.presentation.utils.TextSettingsButton
 import com.kdy_soft.jetnewsclone.ui.theme.JetNewsCloneTheme
 import com.kdy_soft.jetnewsclone.util.Logger
 import kotlinx.coroutines.currentCoroutineContext
@@ -128,9 +133,20 @@ private fun PostTopBar(
     onSharePost: () -> Unit,
     modifier: Modifier = Modifier
 ) {
-    Row(Modifier.fillMaxWidth()) {
-        Text(text = "PostTopBar")/*TODO: 동작과 */
+    Surface(
+        shape = RoundedCornerShape(8.dp),
+        border = BorderStroke(Dp.Hairline, MaterialTheme.colorScheme.onSurface.copy(alpha = .6f)),
+        modifier = modifier.padding(end = 16.dp)
+    ) {
+        Row(Modifier.padding(horizontal = 8.dp)) {
+            FavoriteButton(onClick = {/*TODO : implements event*/ })
+            BookmarkButton(isFavorite, onClick = onToggleFavorite)
+            ShareButton(onClick = onSharePost)
+            TextSettingsButton(onClick = {/*TODO : implements event*/ })
+        }
+
     }
+
 }
 
 
@@ -182,7 +198,14 @@ private fun PostList(
         }
 
         if (postsFeed.recentPosts.isNotEmpty()) {
-            item { PostListHistorySection(postsFeed.recentPosts, onArticleTapped) }
+            item {
+                PostListHistorySection(
+                    postsFeed.recentPosts,
+                    onArticleTapped,
+                    { postId ->/*TODO : implements event [doNotRecommend]*/ },
+                    { postId ->/*TODO : implements event [addToFavorite]*/ }
+                )
+            }
         }
     }
 }
@@ -208,13 +231,46 @@ fun PostListSimpleSection(
 }
 
 @Composable
-fun PostListHistorySection(posts: List<Post>, navToDetail: (postId: String) -> Unit) {
+fun PostListHistorySection(
+    posts: List<Post>,
+    navToDetail: (postId: String) -> Unit,
+    doNotRecommend: (postId: String) -> Unit,
+    addToFavorite: (postId: String) -> Unit
+) {
+    Column {
+        posts.forEach { post ->
+            PostCardHistory(
+                post = post,
+                navigateToArticle = navToDetail,
+                doNotRecommend = doNotRecommend,
+                addToFavorites = addToFavorite
+            )
+            PostListDivider()
+        }
+    }
 
 }
 
 @Composable
 fun PostListPopularSection(posts: List<Post>, navToDetail: (postId: String) -> Unit) {
+    Column {
+        Text(
+            text = stringResource(id = R.string.home_popular_section_title),
+            modifier = Modifier.padding(16.dp),
+            style = MaterialTheme.typography.titleLarge
+        )
 
+        LazyRow(
+            contentPadding = PaddingValues(horizontal = 16.dp),
+            horizontalArrangement = Arrangement.spacedBy(8.dp)
+        ) {
+            items(posts) { post ->
+                PostCardPopular(post,navToDetail)
+            }
+        }
+        Spacer(modifier = Modifier.height(16.dp))
+        PostListDivider()
+    }
 }
 
 @Composable

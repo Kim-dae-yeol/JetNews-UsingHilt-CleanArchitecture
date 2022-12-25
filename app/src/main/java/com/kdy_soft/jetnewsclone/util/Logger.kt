@@ -5,8 +5,9 @@ import android.util.Log
 
 @SuppressWarnings("unused")
 object Logger {
+    private const val FILE_MAX_LENGTH = 20
     private fun getTag(): String =
-        "${Thread.currentThread().stackTrace[4].className}.${Thread.currentThread().stackTrace[4].methodName}"
+        "${Thread.currentThread().stackTrace[4].fileName.take(FILE_MAX_LENGTH)}:${Thread.currentThread().stackTrace[4].lineNumber}"
 
     fun d(msg: String) {
         Log.d(getTag(), msg)

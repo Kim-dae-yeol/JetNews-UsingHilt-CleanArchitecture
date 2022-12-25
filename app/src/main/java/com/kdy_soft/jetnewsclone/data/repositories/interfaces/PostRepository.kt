@@ -5,7 +5,7 @@ import com.kdy_soft.jetnewsclone.model.PostsFeed
 import kotlinx.coroutines.flow.Flow
 
 interface PostRepository {
-    suspend fun getPost(postId: String?): Result<Post>
+    suspend fun getPost(postId: String): Result<Post>
 
     suspend fun getPostsFeed(): Result<PostsFeed>
 

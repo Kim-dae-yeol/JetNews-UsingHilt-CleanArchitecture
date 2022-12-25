@@ -5,8 +5,10 @@ import androidx.annotation.StringRes
 
 
 sealed class ErrorMessage {
-    data class ResourceMessage(val id: Long, @StringRes val resId: Int) : ErrorMessage()
-    data class StringMessage(val id: Long, val message: String) : ErrorMessage()
+    abstract val id: Long
+
+    data class ResourceMessage(@StringRes val resId: Int, override val id: Long) : ErrorMessage()
+    data class StringMessage(val message: String, override val id: Long) : ErrorMessage()
 
     fun getMessageString(res: Resources): String {
         return when (this) {

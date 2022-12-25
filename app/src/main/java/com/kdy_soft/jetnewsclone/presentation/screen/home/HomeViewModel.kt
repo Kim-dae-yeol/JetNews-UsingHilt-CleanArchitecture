@@ -102,14 +102,16 @@ class HomeViewModel @Inject constructor(
 
 
     init {
+        val searchInput = savedStateHandle.get<String>(SEARCH_INPUT_KEY)
+
         refreshPosts()
         viewModelScope.launch {
-            while (true) {
-                if (viewModelScope.isActive) {
-                    delay(5000L)
-                    Logger.d("current state's post feed is ${_uiState.value.postsFeed?.allPosts?.map { it.title } ?: emptyList()}")
-                }
+            postRepository.observeFavorites().collect { favorites ->
+                _uiState.update { it.copy(favorites = favorites) }
+                Logger.d("favorites are changed${_uiState.value.favorites}")
             }
+            Logger.d("end of collect")
+
         }
     }
 
@@ -143,10 +145,12 @@ class HomeViewModel @Inject constructor(
     }
 
     fun toggleFavorites(favorite: String) {
+        Logger.d("Toggle favorites:$favorite")
         viewModelScope.launch {
             _uiState.update { it.copy(isLoading = true) }
             postRepository.toggleFavorite(favorite)
             _uiState.update { it.copy(isLoading = false) }
+            Logger.d("after toggle : ${_uiState.value.favorites}")
         }
     }
 
@@ -184,5 +188,8 @@ class HomeViewModel @Inject constructor(
         _uiState.update { it.copy(searchInput = searchInput) }
     }
 
+    companion object {
+        private const val SEARCH_INPUT_KEY = "home_search"
 
+    }
 }

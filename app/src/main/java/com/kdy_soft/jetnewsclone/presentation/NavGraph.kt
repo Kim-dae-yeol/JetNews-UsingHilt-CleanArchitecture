@@ -11,6 +11,7 @@ import androidx.navigation.compose.rememberNavController
 import com.kdy_soft.jetnewsclone.presentation.screen.home.HomeRoute
 import com.kdy_soft.jetnewsclone.presentation.screen.home.HomeViewModel
 import com.kdy_soft.jetnewsclone.presentation.screen.interests.InterestsRoute
+import com.kdy_soft.jetnewsclone.util.Logger
 
 @Composable
 fun NavGraph(
@@ -25,6 +26,8 @@ fun NavGraph(
         modifier = modifier,
         startDestination = startDestination
     ) {
+        Logger.d("currentRoute:${navController.currentBackStackEntry?.destination?.route}")
+
         composable(JetNewsNavigationRoute.HOME_ROUTE) {
             val homeViewModel: HomeViewModel = hiltViewModel()
 

@@ -11,8 +11,7 @@ import kotlinx.coroutines.flow.*
 object FakePostSource : PostSource {
     private val postFeed: PostsFeed = posts
 
-    private val favorites = mutableSetOf<String>()
-    private val favoritesFlow: MutableStateFlow<Set<String>> = MutableStateFlow(favorites)
+    private val favoritesFlow: MutableStateFlow<Set<String>> = MutableStateFlow(emptySet())
 
     override suspend fun getPost(postId: String?): Result<Post> = kotlin.runCatching {
         postFeed.allPosts.find { it.id == postId } ?: throw NoSuchElementException()
@@ -25,11 +24,14 @@ object FakePostSource : PostSource {
     override fun observeFavorites(): Flow<Set<String>> = favoritesFlow
 
     override suspend fun toggleFavorite(postId: String) {
-        val added = !favorites.add(postId)
-        if (added) {
+        val favorites = favoritesFlow.value.toMutableSet()
+        val isContain = favorites.contains(postId)
+        if (isContain) {
             favorites.remove(postId)
+        }else {
+            favorites.add(postId)
         }
-        favoritesFlow.emit(favorites)
+        favoritesFlow.emit(favorites.toSet())
     }
 
 }

@@ -58,6 +58,9 @@ dependencies {
     implementation "io.coil-kt:coil-compose:$coil_version"
     implementation "androidx.lifecycle:lifecycle-runtime-compose:2.6.0-alpha01"
 
+    //swipe-refresh
+    implementation "com.google.accompanist:accompanist-swiperefresh:$accompanist_version"
+
 
     //material3
     implementation "androidx.compose.material3:material3:$material3_version"

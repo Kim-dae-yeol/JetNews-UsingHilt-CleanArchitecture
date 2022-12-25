@@ -3,14 +3,14 @@
     <string name="close">닫기</string>
     <string name="article_functionality_not_available">Functionality not available 🙈</string>
     <string name="article_share_post">공유하기</string>
-    <string name="published_in">Published in %1$s</string>
+    <string name="published_in">Published in: \n %1$s</string>
     <string name="cd_add_to_favorites">즐겨찾기</string>
     <string name="bookmark">북마크</string>
     <string name="unbookmark">해제</string>
     <string name="cd_share">공유</string>
     <string name="cd_text_settings">문자 설정</string>
     <string name="cd_navigate_up">뒤로가기</string>
-    <string name="home_post_min_read">%1s - %2d min read</string>
+    <string name="home_post_min_read">%1$s - %2$d min read</string>
     <string name="home_post_based_on_history">BASED ON YOUR HISTORY</string>
     <string name="refresh_failure">새로고침에 실패했습니다.</string>
     <string name="home_tap_to_load_content">새로고침</string>
@@ -18,4 +18,9 @@
     <string name="cd_open_navigation_drawer">네비게이션 드로워 열기</string>
     <string name="cd_search">검색</string>
     <string name="home_top_section_title">Top Story</string>
+    <string name="home_popular_section_title">뜨고있음</string>
+    <string name="cd_more_button">더 보기</string>
+    <string name="agree">동의</string>
+    <string name="fewer_stroies">이와같은 이야기 추천안함</string>
+    <string name="fewer_stories_content">아직 구현되지 않음</string>
 </resources>

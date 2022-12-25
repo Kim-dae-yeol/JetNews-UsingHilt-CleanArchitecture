@@ -6,9 +6,9 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Surface
-import androidx.compose.material3.Text
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.MoreVert
+import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -79,9 +79,44 @@ fun PostCardHistory(
                 text = stringResource(id = R.string.home_post_based_on_history),
                 style = MaterialTheme.typography.labelMedium
             )
-
-
+            PostTitle(post = post)
+            AuthorAndReadTime(post = post, modifier = Modifier.padding(top = 4.dp))
         }
+        IconButton(onClick = { openDialog = true }) {
+            Icon(
+                imageVector = Icons.Filled.MoreVert,
+                contentDescription = stringResource(id = R.string.cd_more_button)
+            )
+        }
+
+    }
+    if (openDialog) {
+        AlertDialog(
+            modifier = Modifier.padding(20.dp),
+            onDismissRequest = { openDialog = false },
+            title = {
+                Text(
+                    text = stringResource(id = R.string.fewer_stroies),
+                    style = MaterialTheme.typography.titleLarge
+                )
+            },
+            text = {
+                Text(
+                    stringResource(id = R.string.fewer_stories_content),
+                    style = MaterialTheme.typography.bodyLarge
+                )
+            },
+            confirmButton = {
+                Text(
+                    text = stringResource(id = R.string.agree),
+                    style = MaterialTheme.typography.labelLarge,
+                    color = MaterialTheme.colorScheme.primary,
+                    modifier = Modifier
+                        .padding(16.dp)
+                        .clickable { openDialog = false }
+                )
+            }
+        )
     }
 }
 
