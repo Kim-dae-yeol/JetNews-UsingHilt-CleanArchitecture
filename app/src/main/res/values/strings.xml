@@ -23,4 +23,6 @@
     <string name="agree">동의</string>
     <string name="fewer_stroies">이와같은 이야기 추천안함</string>
     <string name="fewer_stories_content">아직 구현되지 않음</string>
+    <string name="interest_title">Interest</string>
+    <string name="home_title">Home</string>
 </resources>
